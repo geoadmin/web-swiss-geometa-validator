@@ -16,4 +16,4 @@ jobs:
       - name: Redocly CLI
         uses: fluximus-prime/redocly-cli-github-action@v1
         with:
-          args: 'build-docs openapi.yaml --output ./home/static/api-doc.html'
+          args: 'build-docs openapi.yaml --output home/static/api-doc-new.html'
