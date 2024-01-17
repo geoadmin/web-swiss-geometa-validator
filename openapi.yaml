@@ -1,0 +1,63 @@
+openapi: 3.0.3
+info:
+  title: GM03 Validator API
+  description: >-
+    A RESTful API implementation to validate XML metadata in ISO19139.che against the swiss
+    geospatial metadata profile.
+
+  version: 1.0.0
+servers:
+  - url: https://localhost:5000
+paths:
+  /api/validate:
+    post:
+      tags:
+        - validate
+      summary: Upload metadata and start validation
+      description: >-
+        Upload metadata in XML (following the ISO19139.che profile) and start a
+        validation process. Returns the metadata uuid, title, validation status and errors if any.
+      requestBody:
+        description: Upload metadata and create validation task
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              examples:
+                validation Successful:
+                  value: 
+                      [
+                        {
+                        uuid: metadata UUID,
+                        title: metadata title,
+                        valid: yes,
+                        errors: []
+                        },
+                        {
+                        uuid: metadata UUID,
+                        title: metadata title,
+                        valid: no,
+                        errors: [
+                          {
+                          message: message error 1,
+                          location: location error 1
+                          },
+                          {
+                          message: message error 2,
+                          location: location error 2
+                          }
+                          ]
+                        }
+                      ]

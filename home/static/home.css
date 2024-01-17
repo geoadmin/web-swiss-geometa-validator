@@ -1,0 +1,59 @@
+body{
+	font-family: 'Dosis', sans-serif;
+}
+
+#drop-area{
+    height: 50vh;
+    transition: height 1s, opacity 1s;
+}
+
+.border-highlight{
+    outline: solid 0px #2dbeb2;
+    transition: outline-width 0.1s;
+}
+
+.border-highlight:hover{
+    outline-width: 1px;
+}
+
+.md-result{
+    height: 40px;
+}
+
+.md-valid{
+    border: 1.5px solid #00ffae;
+    border-radius: 7px;
+    box-shadow: 0 0 10px rgb(0, 255, 174);
+    color: rgb(0, 183, 125);
+}
+
+.md-notvalid{
+    border: 1.5px solid #ff0066;
+    border-radius: 7px;
+    box-shadow: 0 0 10px rgb(255, 0, 102);
+    color: rgb(160, 3, 66);
+}
+
+.md-notvalid .md-result-header{
+    cursor: pointer;
+}
+
+.md-result-error{
+    transition: max-height 0.5s;
+}
+
+.md-result-error-folded{
+    max-height: 0px;
+    overflow-y: hidden;
+}
+
+.md-result-error-unfolded{
+    max-height: 500px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.md-result-error-unfolded::-webkit-scrollbar {
+    display: none;
+  }
