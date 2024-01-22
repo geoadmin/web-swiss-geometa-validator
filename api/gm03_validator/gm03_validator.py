@@ -8,7 +8,18 @@ XSD = ET.XMLSchema(XSD)
 
 def validate(metadata: bytes) -> dict:
 
-    tree = ET.parse(BytesIO(metadata))
+    try:
+        tree = ET.parse(BytesIO(metadata))
+
+    except:
+        
+        return {
+            "uuid": "XML not well formed",
+            "title": "XML not well formed",
+            "valid": "no",
+            "errors": []
+        }
+
     root = tree.getroot()
 
     # Get UUID
