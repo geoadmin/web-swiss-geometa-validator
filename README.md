@@ -13,9 +13,9 @@ cd gm03-validator
 Build and run the docker image
 ```
 docker build -t swiss-geometa-validator .
-docker run -d -p 5000:5000 --rm swiss-geometa-validator
+docker run -d -p 8000:5000 --rm swiss-geometa-validator
 ```
-Then visist http://localhost:5000 in your browser.
+Then visist http://localhost:8000 in your browser.
 
 ## Running on Linux and Mac OS
 ### Installation
@@ -34,7 +34,7 @@ pip install -r requirements.txt
 ```
 gunicorn -c gunicorn.conf.py '__init__:create_app()'
 ```
-Then visist http://localhost:5000 in your browser.
+Then visist http://localhost:8000 in your browser.
 
 ## Running on Windows
 ### Installation
@@ -51,6 +51,6 @@ pip install -r requirements.txt
 ```
 ### Run the application
 ```
-waitress-serve --host 127.0.0.1 --port 5000 --call app:create_app
+waitress-serve --host 127.0.0.1 --port 8000 --call app:create_app
 ```
-Then visist http://localhost:5000 in your browser.
+Then visist http://localhost:8000 in your browser.
