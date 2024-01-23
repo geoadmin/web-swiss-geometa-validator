@@ -3,7 +3,7 @@ import os
 def test_api_validate_multi(client):
     
     TOTAL_XML = 17
-    VALID_XML = 13
+    VALID_XML = 14
     INVALID_XML = 4
 
     metadatas = os.listdir("test/xml")
