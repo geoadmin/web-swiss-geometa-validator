@@ -31,7 +31,7 @@ def test_view_apidoc(client):
     if response.status_code != 200:
         passed = False
 
-    if b"<title>GM03 Validator API</title>" not in response.data:
+    if b"<title>Swiss geometa validator API</title>" not in response.data:
         passed = False
 
     assert passed
