@@ -13,10 +13,11 @@
     <title>{% block title %} {% endblock %}</title>
   </head>
   <body>
-    <nav class="navbar navbar-light bg-light justify-content-between">
-      <a class="navbar-brand">The swiss geospatial metadata validator</a>
-    </nav>
-    {% block content %} {% endblock %}
+    {% include 'navbar.html' %}
+    <div id="main-content" class="container-fluid">
+      {% block content %} {% endblock %}
+    </div>
+    {% include 'footer.html' %}
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>

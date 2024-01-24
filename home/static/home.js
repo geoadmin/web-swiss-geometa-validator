@@ -72,6 +72,8 @@ async function gm03Validate(payload){
     $("#drop-area").css("height", "0");
     $("#drop-area").css("opacity", "0");
 
+    $('#filter').removeClass("invisible")
+
     read_md_results(result);
 }
 
@@ -147,3 +149,21 @@ function read_md_results(results) {
 $("#drop-area a").click(function(e){
     e.stopPropagation();
 });
+
+// Filter results to show only not valid
+$("#filterNotValid").click(function(){
+
+    if ($("#filterNotValid").hasClass("clicked")){
+        $("#md-results .md-valid").show();
+        $("#filterNotValid").removeClass("clicked");
+        $("#filterNotValid").removeClass("btn-danger");
+        $("#filterNotValid").addClass("btn-outline-danger");
+    }
+    
+    else{
+        $("#md-results .md-valid").hide();
+        $("#filterNotValid").addClass("clicked");
+        $("#filterNotValid").addClass("btn-danger");
+        $("#filterNotValid").removeClass("btn-outline-danger");
+    }
+})

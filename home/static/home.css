@@ -1,5 +1,9 @@
 body{
-	font-family: 'Dosis', sans-serif;
+	font-family: 'Raleway', sans-serif;
+}
+
+#main-content{
+    min-height: calc(100vh - 56px);
 }
 
 #drop-area{
@@ -57,3 +61,7 @@ body{
 .md-result-error-unfolded::-webkit-scrollbar {
     display: none;
   }
+
+#footer{
+    height: 50px;;
+}

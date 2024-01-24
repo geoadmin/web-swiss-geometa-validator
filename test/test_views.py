@@ -9,8 +9,7 @@ def test_view_home_content(client):
     passed = True
 
     content =[
-        b'<a class="navbar-brand">'\
-        b'GM03 Validator</a>',
+        b'Swiss geometa validator',
         b'Drag and drop your metadata '\
         b'in XML ISO19139.che here<br>-<br>',
         b'<div class="drop-area'
@@ -36,3 +35,8 @@ def test_view_apidoc(client):
         passed = False
 
     assert passed
+
+
+def test_view_about(client):
+    response = client.get("/about")
+    assert response.status_code == 200
