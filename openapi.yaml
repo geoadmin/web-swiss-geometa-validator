@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: GM03 Validator API
+  title: Swiss geometa validator API
   description: >-
     A RESTful API implementation to validate XML metadata in ISO19139.che against the swiss
     geospatial metadata profile.
