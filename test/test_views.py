@@ -1,6 +1,6 @@
 def test_view_home_status(client):
     response = client.get("/")
-    assert response.status_code == 201
+    assert response.status_code == 200
 
 
 def test_view_home_content(client):
