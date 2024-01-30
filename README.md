@@ -1,4 +1,6 @@
 # Swiss Geometadata Validator
+![Static Badge](https://img.shields.io/badge/Python-3.9%2B_-green)
+
 The swiss geometadata validator gives a standalone tool in form of a Web application and API to validate XML files encoded in `ISO19139.che` against the swiss geospatial metadata profile.
 
 > The ISO19139.che is the XML implementation of the swiss geospatial metadata profile.
