@@ -35,7 +35,7 @@ pip install -r requirements.txt
 ```
 ### Run the application
 ```
-gunicorn -c gunicorn.conf.py '__init__:create_app()'
+gunicorn -c gunicorn.conf.py app:app
 ```
 Then visist http://localhost:8000 in your browser.
 
