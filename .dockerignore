@@ -8,6 +8,7 @@ schxslt*
 test-files
 test*
 test-files/
+test-files-large/
 test*/
 test/
 process_schematron.py

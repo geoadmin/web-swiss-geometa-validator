@@ -3,10 +3,8 @@ from io import BytesIO
 from lxml import etree as ET
 from api.gm03_validator import config
 
-XSD = ET.parse("api/gm03_validator/schemas/iso19139.che/src/main/plugin/iso19139.che/schema.xsd")
-XSD = ET.XMLSchema(XSD)
 
-def validate(metadata: bytes) -> dict:
+def validate(metadata: bytes, xsd: ET.XMLSchema, schematrons: list) -> dict:
 
     try:
         tree = ET.parse(BytesIO(metadata))
@@ -47,22 +45,20 @@ def validate(metadata: bytes) -> dict:
     }
 
     # Validate with XSD schema
-    if not XSD.validate(tree):
+    if not xsd.validate(tree):
 
         result["valid"] = "no"
 
-        for error in XSD.error_log:
+        for error in xsd.error_log:
             result["errors"].append({
                 "message": re.sub("\s+", " ", error.message),
                 "location": f"line {error.line}, {error.path}"
             })
 
     # Validate with schematron
-    for schematron in config.SCHEMATRON:
+    for schematron in schematrons:
 
-        xslt_tree = ET.parse(f"api/gm03_validator/schematron/{schematron}.xsl")
-        transform = ET.XSLT(xslt_tree)
-        report = transform(tree)
+        report = schematron(tree)
 
         for error in report.xpath(".//svrl:failed-assert", namespaces=config.NS):
             result["valid"] = "no"
