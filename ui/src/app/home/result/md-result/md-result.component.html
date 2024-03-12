@@ -1,0 +1,46 @@
+<div 
+[ngClass]="{
+    'md-valid': validationResult.valid == 'yes',
+    'md-notvalid': validationResult.valid == 'no'
+    }"
+(click)="validationResult.valid == 'no' && expandErrors()"
+class="mx-1 mx-sm-2 mx-md-5 my-3 md-result h-100">
+<div class="row md-result-header mx-0 my-2 flex-nowrap align-items-center">
+    <div class="col-8 col-sm-4 overflow-hidden">
+        <p class="text-muted my-0 text-nowrap">
+            {{ validationResult.uuid }}
+        </p>
+    </div>
+    <div class="col-sm-6 d-none d-sm-block overflow-hidden">
+        <p class="text-muted my-0 text-nowrap">
+            {{ validationResult.title }}
+        </p>
+    </div>
+    <div class="col-4 col-sm-2 overflow-hidden" style="min-width:100px">
+        <p class="text-right my-0 text-nowrap">
+            @if(validationResult.valid == 'yes') {
+                <fa-icon [icon]="iconCheck"></fa-icon>
+            } @else {
+                <fa-icon [icon]="iconXmark"></fa-icon>
+            }
+        </p>
+    </div>
+</div>
+@if(validationResult.valid == 'no'){
+    <div 
+    [ngClass]="{'md-result-error-unfolded': errorsExpanded}"
+    class="col md-result-error">
+        <p class="mt-3">Errors</p>
+        <hr>
+        @for(error of validationResult.errors; track error) {
+            <p class="text-break mb-1">
+                {{ error.message }}
+            </p>
+            <p class="text-break text-dark">
+                {{ error.location }}
+            </p>
+            @if(!$last){<hr>}
+        }
+    </div>
+}
+</div>
