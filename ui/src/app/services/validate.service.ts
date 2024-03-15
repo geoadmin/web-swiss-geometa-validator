@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ValidationResult } from '../validation-result';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,9 @@ export class ValidateService {
       formData.append("files", file, file.name);
     });
 
-    return this.http.post<ValidationResult[]>("http://localhost:8000/api/validate", formData);
+    return this.http.post<ValidationResult[]>(
+      environment.apiBaseUrl + "/api/validate", formData
+      );
 
   }
 }

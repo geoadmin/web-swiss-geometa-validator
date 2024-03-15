@@ -1,14 +1,11 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, send_from_directory
 
-home_bp = Blueprint('home', __name__, template_folder='templates',
-    static_folder='static', static_url_path='/static/home')
+home_bp = Blueprint('home', __name__)
 
 @home_bp.route('/')
 def index():
+    return send_from_directory('./web/browser', 'index.html')
 
-    return render_template('index.html')
-
-@home_bp.route('/about')
-def about():
-
-    return render_template('about.html')
+@home_bp.route('/<path:path>', methods=['GET'])
+def static_proxy(path):
+    return send_from_directory('./web/browser', path)
