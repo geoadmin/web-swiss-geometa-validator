@@ -1,0 +1,5 @@
+
+.border-highlight{
+    outline: solid 0px #2dbeb2;
+    transition: outline-width 0.1s;
+}

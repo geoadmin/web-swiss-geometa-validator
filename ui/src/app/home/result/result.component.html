@@ -1,0 +1,15 @@
+<app-result-filter 
+    [ngClass]="{'d-none': !showResultFilter}"
+    (showOnlyNotValid)="showOnlyNotValid = !showOnlyNotValid"
+>
+</app-result-filter>
+<div id="md-results" class="container-fluid">
+    @for (result of validationResults; track result.uuid) {
+        @if(result.valid == "yes" && !showOnlyNotValid) {
+            <app-md-result [validationResult]="result"></app-md-result>
+        }
+        @if(result.valid == "no") {
+            <app-md-result [validationResult]="result"></app-md-result>
+        }
+    }
+</div>

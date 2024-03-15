@@ -1,25 +1,3 @@
-body{
-	font-family: 'Raleway', sans-serif;
-}
-
-#main-content{
-    min-height: calc(100vh - 56px);
-}
-
-#drop-area{
-    height: 50vh;
-    transition: height 1s, opacity 1s;
-}
-
-.border-highlight{
-    outline: solid 0px #2dbeb2;
-    transition: outline-width 0.1s;
-}
-
-.border-highlight:hover{
-    outline-width: 1px;
-}
-
 .md-result{
     height: 40px;
 }
@@ -44,9 +22,6 @@ body{
 
 .md-result-error{
     transition: max-height 0.5s;
-}
-
-.md-result-error-folded{
     max-height: 0px;
     overflow-y: hidden;
 }
@@ -61,7 +36,3 @@ body{
 .md-result-error-unfolded::-webkit-scrollbar {
     display: none;
   }
-
-#footer{
-    height: 50px;;
-}

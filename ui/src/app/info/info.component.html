@@ -1,18 +1,10 @@
-{% extends 'base.html' %}
-
-{% block title %}
-    The swiss geometa validator
-{% endblock %}
-
-{% block content %}
-
 <div class="container mt-5">
     <div class="row">
         <div class="col-10 mx-auto">
             <p class="text-break text-dark">
                 The <b>swiss geometa validator</b> provides a standalone tool in form of a 
-                <a href="{{ url_for('home.index') }}">web application</a> and an 
-                <a href="{{ url_for('home.static',filename='api-doc.html') }}" target="_blank">API</a>
+                <a href="/">web application</a> and an 
+                <a href="/" target="_blank">API</a>
                 to validate XML files encoded in ISO19139.che against the swiss geospatial metadata profile.
                 <br><br>
                 The <b>ISO19139.che</b> is the XML implementation of the swiss geospatial metadata profile.
@@ -24,5 +16,3 @@
         </div>
     </div>
 </div>
-
-{% endblock %}

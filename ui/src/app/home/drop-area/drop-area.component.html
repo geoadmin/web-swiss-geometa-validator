@@ -1,0 +1,46 @@
+
+<div
+    [ngStyle]="dropStyle"
+    id="drop-area" class="container-fluid">
+    <div
+        [ngStyle] = "{'outline-width': outlineWidth}"
+        (mouseenter)="onDragEnter()"
+        (dragover)="onDragEnter()"
+        (mouseleave)="onDragLeave()"
+        (dragleave)="onDragLeave()"
+        (drop)="onDrop($event)"
+        (click)="onClick()"
+        class="drop-area mx-5 row h-100 align-items-center rounded shadow-sm bg-light border-highlight">
+        <input (change)="onChange($event)" type="file" id="file-browser" multiple="multiple" hidden>
+        <div class="col mx-auto">
+
+            @if(state == "active") {
+                <h5 class="text-center text-muted mb-3"><fa-icon class="fa-2xl" [icon]="uploadIcon"></fa-icon></h5>
+                <h5 class="text-center text-muted">
+                    Drag and drop your metadata in XML ISO19139.che here<br>-<br>
+                    or use the <a 
+                        href="assets/api-doc.html" 
+                        target="_blank"
+                        (click)="$event.stopPropagation();">
+                        API
+                    </a>
+                </h5>
+
+            } @else if (state == "running") {
+                <h5 class="text-center text-muted">
+                    Validation in progress... Please wait
+                </h5>
+              }
+
+            @if(state == "running") {
+                <div class="d-flex justify-content-center">
+                    <div 
+                    class="spinner-border text-info mt-2" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

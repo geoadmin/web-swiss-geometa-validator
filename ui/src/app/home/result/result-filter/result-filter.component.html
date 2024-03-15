@@ -1,0 +1,13 @@
+<div id="filter" class="container-fluid">
+    <div class="row mx-5 mt-5 mb-3">
+        <button
+            (click)="onOnlyNotValid()"
+            [ngClass]="buttonClicked ? 'btn-danger' : 'btn-outline-danger'"
+            id = "filterNotValid" 
+            type="button" 
+            class="btn btn-sm font-weight-bold">
+            Only not valid
+        </button>
+        <a href="/" class="btn btn-outline-secondary btn-sm font-weight-bold ml-auto" role="button">Reset</a>
+    </div>
+</div>
