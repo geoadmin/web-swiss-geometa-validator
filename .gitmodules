@@ -1,0 +1,4 @@
+[submodule "api/eCH0271_validator/schemas/iso19115-3.2018.che"]
+	path = api/eCH0271_validator/schemas/iso19115-3.2018.che
+	url = https://github.com/metadata101/iso19115-3.2018.che.git
+	branch = 4.4.9
