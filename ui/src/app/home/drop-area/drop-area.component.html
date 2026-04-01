@@ -17,9 +17,9 @@
             @if(state == "active") {
                 <h5 class="text-center text-muted mb-3"><fa-icon class="fa-2xl" [icon]="uploadIcon"></fa-icon></h5>
                 <h5 class="text-center text-muted">
-                    Drag and drop your metadata in XML ISO19139.che here<br>-<br>
-                    or use the <a 
-                        href="assets/api-doc.html" 
+                    Drag and drop your metadata in XML iso19115-3.2018.che (eCH-0271) here<br>-<br>
+                    or use the <a
+                        href="assets/api-doc.html"
                         target="_blank"
                         (click)="$event.stopPropagation();">
                         API
@@ -34,7 +34,7 @@
 
             @if(state == "running") {
                 <div class="d-flex justify-content-center">
-                    <div 
+                    <div
                     class="spinner-border text-info mt-2" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>

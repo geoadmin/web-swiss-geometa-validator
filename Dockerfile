@@ -14,6 +14,8 @@ RUN pip install -r requirements.txt
 
 RUN pip install gunicorn
 
+RUN python process_schematron.py
+
 EXPOSE 5000
 
-CMD ["gunicorn", "-c", "gunicorn.conf.py", "__init__:create_app()"]
+CMD ["gunicorn", "-c", "gunicorn.conf.py", "app:app"]

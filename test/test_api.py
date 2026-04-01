@@ -69,7 +69,7 @@ def test_api_validate_invalid_xsd(client):
     if response.json[0]["title"] != "Title not found":
         passed = False
 
-    if len(response.json[0]["errors"]) != 4:
+    if len(response.json[0]["errors"]) != 1:
         passed = False
 
     assert passed
@@ -82,7 +82,7 @@ def test_api_validate_invalid_iso(client):
     response = client.post("/api/validate", 
                 data={"files": files})
 
-    assert len(response.json[0]["errors"]) == 3
+    assert len(response.json[0]["errors"]) == 1  # iso19139 format → 1 XSD error
 
 
 def test_api_validate_invalid_che(client):
@@ -92,7 +92,7 @@ def test_api_validate_invalid_che(client):
     response = client.post("/api/validate", 
                 data={"files": files})
 
-    assert len(response.json[0]["errors"]) == 5
+    assert len(response.json[0]["errors"]) == 1  # iso19139 format → 1 XSD error
 
 
 def test_api_validate_bug_xml(client):
