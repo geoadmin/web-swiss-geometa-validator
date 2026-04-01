@@ -1,4 +1,4 @@
-FROM python:3.9-slim-bookworm
+FROM python:3.11-slim-bookworm
 
 ENV HOST 0.0.0.0
 ENV PORT 5000

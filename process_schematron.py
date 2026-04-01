@@ -14,7 +14,7 @@ with PySaxonProcessor(license=False) as proc:
     xsltproc = proc.new_xslt30_processor()
     xsltproc.set_cwd(".")
 
-    for schematron in config.SCHEMATRON:
+    for schematron, _ in config.SCHEMATRON:
 
         xsltproc.transform_to_file(
             source_file=f"{SCHEMA_BASE}/schematron/{schematron}.sch",
