@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Swiss geometa validator API
   description: >-
-    A RESTful API implementation to validate XML metadata in ISO19139.che against the swiss
+    A RESTful API implementation to validate XML metadata in iso19115-3.2018.che (eCH-0271) against the swiss
     geospatial metadata profile.
 
   version: 1.0.0
@@ -15,7 +15,7 @@ paths:
         - validate
       summary: Upload metadata and start validation
       description: >-
-        Upload metadata in XML (following the ISO19139.che profile) and start a
+        Upload metadata in XML (following the iso19115-3.2018.che profile) and start a
         validation process. Returns the metadata uuid, title, validation status and errors if any.
       requestBody:
         description: Upload metadata and create validation task

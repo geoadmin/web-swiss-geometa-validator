@@ -69,11 +69,17 @@ def validate(metadata: bytes, xsd, schematrons: list) -> dict:
     for schematron, is_mandatory in schematrons:
 
         try:
-            svrl_str = schematron.transform_to_string(
-                source_text=xml_bytes.decode('utf-8')
-            )
+            with tempfile.NamedTemporaryFile(suffix='.xml', delete=False) as tmp:
+                tmp.write(xml_bytes)
+                tmp_path = tmp.name
+            svrl_str = schematron.transform_to_string(source_file=tmp_path)
         except Exception:
             continue
+        finally:
+            try:
+                os.unlink(tmp_path)
+            except Exception:
+                pass
 
         if not svrl_str:
             entry = {
