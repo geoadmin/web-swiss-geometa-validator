@@ -1,13 +1,12 @@
 """
 Unit tests for api.eCH0271_validator.eCH0271_validator
 covering branches with low coverage:
-  - _run_in_large_stack (normal return and exception propagation)
   - validate: XML not well formed
   - validate: UUID not found / title not found
   - validate: XSD errors
   - validate: schematron producing no SVRL (empty string)
   - validate: SVRL that cannot be parsed
-  - validate: schematron exception (silently skipped)
+  - validate: schematron exception (reported as error/warning, not swallowed)
   - validate: failed-assert in mandatory schematron → error
   - validate: failed-assert in non-mandatory schematron → warning
   - api endpoint: no XML files uploaded
@@ -16,7 +15,7 @@ import pytest
 from unittest.mock import MagicMock, patch
 from io import BytesIO
 
-from api.eCH0271_validator.eCH0271_validator import validate, _run_in_large_stack
+from api.eCH0271_validator.eCH0271_validator import validate
 
 
 # ---------------------------------------------------------------------------
@@ -95,34 +94,6 @@ def _make_xsd_mock(errors=None):
     mock = MagicMock()
     mock.iter_errors.return_value = iter(errors or [])
     return mock
-
-
-# ---------------------------------------------------------------------------
-# _run_in_large_stack
-# ---------------------------------------------------------------------------
-
-class TestRunInLargeStack:
-
-    def test_returns_value(self):
-        result = _run_in_large_stack(lambda x, y: x + y, 3, 4)
-        assert result == 7
-
-    def test_passes_kwargs(self):
-        def fn(a, b=10):
-            return a * b
-        result = _run_in_large_stack(fn, 3, b=5)
-        assert result == 15
-
-    def test_propagates_exception(self):
-        def boom():
-            raise ValueError("oops")
-        with pytest.raises(ValueError, match="oops"):
-            _run_in_large_stack(boom)
-
-    def test_small_stack_size_parameter(self):
-        # Ensure stack_size kwarg is consumed by the helper and not forwarded to fn
-        result = _run_in_large_stack(lambda: 42, stack_size=1 * 1024 * 1024)
-        assert result == 42
 
 
 # ---------------------------------------------------------------------------
@@ -249,13 +220,19 @@ class TestValidateSchematronSVRLParseError:
 
 class TestValidateSchematronException:
 
-    def test_transform_exception_is_skipped(self):
+    def test_transform_exception_mandatory_marks_invalid(self):
         mock = MagicMock()
         mock.transform_to_string.side_effect = RuntimeError("Saxon crashed")
-        # Should not raise; the schematron is silently skipped
         result = validate(MINIMAL_VALID_XML, _make_xsd_mock(), [(mock, True)])
-        # No assertion is made about valid/invalid — just that it doesn't crash
-        assert "uuid" in result
+        assert result["valid"] == "no"
+        assert any("Saxon crashed" in e["message"] for e in result["errors"])
+
+    def test_transform_exception_non_mandatory_adds_warning(self):
+        mock = MagicMock()
+        mock.transform_to_string.side_effect = RuntimeError("Saxon crashed")
+        result = validate(MINIMAL_VALID_XML, _make_xsd_mock(), [(mock, False)])
+        assert result["valid"] == "yes"
+        assert any("Saxon crashed" in w["message"] for w in result["warnings"])
 
 
 # ---------------------------------------------------------------------------
