@@ -1,9 +1,13 @@
 import re
 import os
+import logging
 import tempfile
 from io import BytesIO
 from lxml import etree as ET
 from api.eCH0271_validator import config
+
+logger = logging.getLogger(__name__)
+
 
 
 def validate(metadata: bytes, xsd, schematrons: list) -> dict:
@@ -64,7 +68,14 @@ def validate(metadata: bytes, xsd, schematrons: list) -> dict:
             })
 
     # Validate with schematron
-    xml_bytes = ET.tostring(tree.getroot(), xml_declaration=True, encoding='UTF-8')
+    # Strip xsi:schemaLocation and xsi:noNamespaceSchemaLocation to prevent Saxon
+    # from trying to fetch external URLs, which would cause the validation to hang.
+    root_copy = tree.getroot().__copy__()
+    xsi_ns = 'http://www.w3.org/2001/XMLSchema-instance'
+    for attr in (f'{{{xsi_ns}}}schemaLocation', f'{{{xsi_ns}}}noNamespaceSchemaLocation'):
+        if attr in root_copy.attrib:
+            del root_copy.attrib[attr]
+    xml_bytes = ET.tostring(root_copy, xml_declaration=True, encoding='UTF-8')
 
     for schematron, is_mandatory in schematrons:
 
@@ -73,7 +84,17 @@ def validate(metadata: bytes, xsd, schematrons: list) -> dict:
                 tmp.write(xml_bytes)
                 tmp_path = tmp.name
             svrl_str = schematron.transform_to_string(source_file=tmp_path)
-        except Exception:
+        except Exception as transform_exc:
+            logger.error("Schematron transform_to_string failed: %s", transform_exc, exc_info=True)
+            entry = {
+                "message": f"Schematron execution error: {transform_exc}",
+                "location": ""
+            }
+            if is_mandatory:
+                result["valid"] = "no"
+                result["errors"].append(entry)
+            else:
+                result["warnings"].append(entry)
             continue
         finally:
             try:
