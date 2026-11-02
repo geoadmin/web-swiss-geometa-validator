@@ -9,10 +9,13 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install -U setuptools pip
-RUN pip install -r requirements.txt
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends ca-certificates \
+	&& update-ca-certificates \
+	&& rm -rf /var/lib/apt/lists/*
 
-RUN pip install gunicorn
+RUN pip install -U setuptools pip \
+	&& pip install -r requirements.txt
 
 RUN python process_schematron.py
 

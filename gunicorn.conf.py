@@ -1,5 +1,6 @@
 import multiprocessing
 import resource
+import os
 
 # saxonche embeds a JVM (GraalVM native image) which requires a larger stack.
 # Increase the stack size limit to unlimited before workers boot so Saxon
@@ -19,3 +20,6 @@ def post_fork(server, worker):
 worker_class = "gthread"
 workers = 1
 threads = int(multiprocessing.cpu_count() * 2) + 1
+
+# Render injects PORT at runtime. Default to 5000 for local/docker parity.
+bind = f"{os.getenv('HOST', '0.0.0.0')}:{os.getenv('PORT', '5000')}"
